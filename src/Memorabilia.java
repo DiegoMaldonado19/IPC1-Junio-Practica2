@@ -4,10 +4,6 @@
  */
 package src;
 import java.util.*;
-
-import org.graalvm.compiler.hotspot.CompilerConfigurationFactory_OptionDescriptors;
-
-import jdk.tools.jlink.internal.SymLinkResourcePoolEntry;
 public class Memorabilia{
     public static void main(String[] args){
         /**
@@ -329,6 +325,8 @@ public class Memorabilia{
      * Metodo prestar pelicula, el cual lleva la logica para prestar una pelicula en el sistema
      */
     public void prestarPelicula(){
+        int eleccionPelicula=0;
+        int eleccionCliente=0;
         System.out.println("\n");
         System.out.println("Bienvenido al apartado para prestar peliculas");
         System.out.println("Aqui podras prestar peliculas");
@@ -336,21 +334,36 @@ public class Memorabilia{
             System.out.println("\n");
             System.out.println("Aun no hay peliculas dentro del sistema");
         }
-        else if(contadorClientes==0){
+        if(contadorClientes==0){
             System.out.println("\n");
             System.out.println("Aun no hay clientes dentro del sistema");
         }
-        else if(contadorPeliculas!=0 && contadorClientes!=0){
+        if(contadorPeliculas!=0){
+            System.out.println("\n");
+            System.out.println("Las peliculas disponibles en el sistema son:");
             for(int i=0; i<contadorPeliculas; i++){
                 if(peliculaDisponible[i]==true){
-                    System.out.println("\n");
-                    System.out.println("Las peliculas disponibles en el sistema son:");
-                    visualizarPeliculaEnSistema(i);
-                }
-                else if(peliculaDisponible[i]==false){
-                    System.out.println("No hay peliculas disponibles en el sistema, vuelve pronto");
+                    System.out.println((i+1)+") "+nombrePelicula[i]+", año: "+anioPelicula[i]+", categoria: "+categoriaPelicula[i]);
                 }
             }
+            System.out.println("\n");
+            System.out.println("¿Que pelicula deseas prestar?");
+            eleccionPelicula = scanner.nextInt();
+
+            peliculaDisponible[eleccionPelicula-1] = false;
+            peliculaPrestadaId[eleccionPelicula-1] = eleccionPelicula;
+        }
+        if(contadorClientes!=0){
+            System.out.println("\n");
+            System.out.println("Los clientes en el sistema son: ");
+            for(int i=0; i<contadorClientes; i++){
+                System.out.println((i+1)+") "+nombreCliente[i]);
+            }
+            System.out.println("¿Qué cliente tendrá esta pelicula?");
+            eleccionCliente = scanner.nextInt();
+
+            clienteQuePrestoPelicula[eleccionCliente-1] = eleccionCliente;
+            tienePeliculaPrestada[eleccionCliente-1] = true;
         }
     }
 }
