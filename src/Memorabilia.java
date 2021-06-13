@@ -1,18 +1,36 @@
+/**
+ * Definimos la carpeta donde se encuentra nuestro codigo fuente
+ * E importamos todas las clases del paquete java util
+ */
 package src;
 import java.util.*;
 public class Memorabilia{
     public static void main(String[] args){
+        /**
+         * Instanciamos objeto para evitar problemas con el ambito estatico
+         */
         Memorabilia memorabilia = new Memorabilia();
     }
 
+    /**
+     * Constructor de la clase donde se hacen los llamados a los metodos correspondientes
+     */
     public Memorabilia(){
+        /**
+         * Damos un mensaje de bienvenida e imprimimos el menu principal
+         */
         mensajeDeBienvenida();
         menuPrincipal();
     }
 
+    /**
+     * Instanciamos un objeto de la clase scanner para poder leer desde consola
+     */
     Scanner scanner = new Scanner(System.in);
 
-    
+    /**
+     * Conjunto de arreglos, los cuales nos permitiran almacenar la informacion ingresadad por el usuario
+     */
     int[] clienteId = new int[50];
     String[] nombreCliente = new String[50];
     int[] telefonoCliente = new int[50];
@@ -26,7 +44,10 @@ public class Memorabilia{
     int[] clienteQuePrestoPelicula = new int[50];
     int[] cantidadDiasPrestamo = new int[50];
 
-    int contadorPeliculas=0;
+    /**
+     * Variables enteras para saber cuantos clientes y peliculas en el sistema
+     */
+    int contadorPeliculas=0, contadorClientes=0;
 
     /**
      * Metodo para imprimir mensaje de bienvenida en pantalla
@@ -70,25 +91,33 @@ public class Memorabilia{
                     }
                     else if(contadorPeliculas!=0){
                         for(int i=0; i<contadorPeliculas; i++){
-                            visualizarPeliculasEnSistema(i);
+                            visualizarPeliculaEnSistema(i);
                         }
                     }
                     break;
                    
                 case 4:
-                    IngresarPeliculas();
+                    IngresarPelicula();
                     break;
             
                 case 5:
-                    System.out.println("Submenu 5");
+                    ingresarCliente();
                     break;
                 
                 case 6:
-                    System.out.println("Submenu 6");
+                    if(contadorClientes==0){
+                        System.out.println("\n");
+                        System.out.println("Aun no se han ingresado clientes al sistema");
+                    }
+                    else if(contadorClientes!=0){
+                        for(int i=0; i<contadorClientes; i++){
+                            mostrarClienteEnSistema(i);
+                        }
+                    }
                     break;     
 
                 case 7:
-                    menuReportes();
+                    menuReporte();
                     break;
                     
                 case 8:
@@ -107,7 +136,7 @@ public class Memorabilia{
     /**
      * Metodo para navegar por el menu de reportes
      */
-    public void menuReportes(){
+    public void menuReporte(){
         int opcion = 0;
         boolean salir = false;
 
@@ -153,7 +182,10 @@ public class Memorabilia{
         }while(salir==false);
     }
 
-    public void IngresarPeliculas(){
+    /**
+     * Metodo para ingresar una nueva pelicula al sistema
+     */
+    public void IngresarPelicula(){
         System.out.println("\n");
         System.out.println("Ingrese el id de la pelicula ");
         peliculaId[contadorPeliculas] = scanner.nextInt();
@@ -169,7 +201,11 @@ public class Memorabilia{
         contadorPeliculas++;
     }
 
-    public void visualizarPeliculasEnSistema(int posicion){
+    /**
+     * Metodo para visualizar peliculas en el sistema, el cual es iterable
+     * @param posicion
+     */
+    public void visualizarPeliculaEnSistema(int posicion){
         System.out.println("\n");
         System.out.println("El id de la pelicula es: "+peliculaId[posicion]);
         System.out.println("El nombre de la pelicula es: "+nombrePelicula[posicion]);
@@ -180,6 +216,39 @@ public class Memorabilia{
         }
         else if(peliculaDisponible[posicion]==false){
             System.out.println("La pelicula "+nombrePelicula[posicion]+" no esta disponible");
+        } 
+    }
+
+    /**
+     * Metodo para ingresar los datos de un nuevo cliente al sistema
+     */
+    public void ingresarCliente(){
+        System.out.println("\n");
+        System.out.println("Ingresa el id del cliente");
+        clienteId[contadorClientes] = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Ingresa el nombre del cliente");
+        nombreCliente[contadorClientes] = scanner.nextLine();
+        System.out.println("Ingresa el telefono del cliente");
+        telefonoCliente[contadorClientes] = scanner.nextInt();
+        tienePeliculaPrestada[contadorClientes] = false;
+        contadorClientes++;
+    }
+
+    /**
+     * Metodo para mostrar clientes en el sistema, el cual es iterable
+     * @param posicion
+     */
+    public void mostrarClienteEnSistema(int posicion){
+        System.out.println("\n");
+        System.out.println("El id del cliente es: "+clienteId[posicion]);
+        System.out.println("El nombre del cliente es: "+nombreCliente[posicion]);
+        System.out.println("El telefono del cliente es: "+telefonoCliente[posicion]);
+        if(tienePeliculaPrestada[posicion]==true){
+            System.out.println("El cliente "+nombreCliente[posicion]+" presto al menos una pelicula");
+        }
+        else if(peliculaDisponible[posicion]==false){
+            System.out.println("El cliente "+nombreCliente[posicion]+" no tiene peliculas prestadas");
         } 
     }
 }
