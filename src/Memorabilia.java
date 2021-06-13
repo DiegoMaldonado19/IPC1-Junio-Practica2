@@ -12,26 +12,34 @@ public class Memorabilia{
 
     Scanner scanner = new Scanner(System.in);
 
-    /*
-    int[] clienteId = new int[];
-    String[] nombre = new String[];
-    int[] telefonoCliente = new int[];
-    boolean[] tienePeliculaPrestada = new boolean[];
-    int[] peliculaId = new int[];
-    String[] nombrePelicula = new String[];
-    String[] categoriaPelicula = new String[];
-    boolean[] peliculaDisponible = new boolean[];
-    int[] peliculaPrestadaId = new int[];
-    int[] clienteQuePrestoPelicula = new int[];
-    int[] cantidadDiasPrestamo = new int[];
-    */
+    
+    int[] clienteId = new int[50];
+    String[] nombreCliente = new String[50];
+    int[] telefonoCliente = new int[50];
+    boolean[] tienePeliculaPrestada = new boolean[50];
+    int[] peliculaId = new int[50];
+    String[] nombrePelicula = new String[50];
+    String[] categoriaPelicula = new String[50];
+    int[] anioPelicula = new int[50];
+    boolean[] peliculaDisponible = new boolean[50];
+    int[] peliculaPrestadaId = new int[50];
+    int[] clienteQuePrestoPelicula = new int[50];
+    int[] cantidadDiasPrestamo = new int[50];
 
+    int contadorPeliculas=0;
+
+    /**
+     * Metodo para imprimir mensaje de bienvenida en pantalla
+     */
     public void mensajeDeBienvenida(){
         System.out.println("Bienvenido a Memorabilia");
         System.out.println("En nuestro sistema puedes prestar peliculas y verlas desde la comodidad de tu casa");
         System.out.println("\n");
     }
 
+    /**
+     * Metodo para navegar por el menu principal
+     */
     public void menuPrincipal(){
         boolean salir = false;
         int opcion=0;
@@ -56,11 +64,19 @@ public class Memorabilia{
                     break;
                 
                 case 3:
-                    System.out.println("Submenu 3");
+                    if(contadorPeliculas==0){
+                        System.out.println("\n");
+                        System.out.println("Aun no se han ingresado peliculas al sistema");
+                    }
+                    else if(contadorPeliculas!=0){
+                        for(int i=0; i<contadorPeliculas; i++){
+                            visualizarPeliculasEnSistema(i);
+                        }
+                    }
                     break;
                    
                 case 4:
-                    System.out.println("Submenu 4");
+                    IngresarPeliculas();
                     break;
             
                 case 5:
@@ -88,6 +104,9 @@ public class Memorabilia{
         while(salir==false);
     }
 
+    /**
+     * Metodo para navegar por el menu de reportes
+     */
     public void menuReportes(){
         int opcion = 0;
         boolean salir = false;
@@ -132,5 +151,35 @@ public class Memorabilia{
                     break;
             }
         }while(salir==false);
+    }
+
+    public void IngresarPeliculas(){
+        System.out.println("\n");
+        System.out.println("Ingrese el id de la pelicula ");
+        peliculaId[contadorPeliculas] = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Ingrese el nombre de la pelicula");
+        nombrePelicula[contadorPeliculas] = scanner.nextLine();
+        System.out.println("Ingrese el año de la pelicula");
+        anioPelicula[contadorPeliculas] = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Ingrese la categoria de la pelicula");
+        categoriaPelicula[contadorPeliculas] = scanner.nextLine();
+        peliculaDisponible[contadorPeliculas] = true; 
+        contadorPeliculas++;
+    }
+
+    public void visualizarPeliculasEnSistema(int posicion){
+        System.out.println("\n");
+        System.out.println("El id de la pelicula es: "+peliculaId[posicion]);
+        System.out.println("El nombre de la pelicula es: "+nombrePelicula[posicion]);
+        System.out.println("El anio de la pelicula es: "+anioPelicula[posicion]);
+        System.out.println("La categoria de la pelicula es: "+categoriaPelicula[posicion]);
+        if(peliculaDisponible[posicion]==true){
+            System.out.println("La pelicula "+nombrePelicula[posicion]+" esta disponible");
+        }
+        else if(peliculaDisponible[posicion]==false){
+            System.out.println("La pelicula "+nombrePelicula[posicion]+" no esta disponible");
+        } 
     }
 }
