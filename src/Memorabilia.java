@@ -4,6 +4,10 @@
  */
 package src;
 import java.util.*;
+
+import org.graalvm.compiler.hotspot.CompilerConfigurationFactory_OptionDescriptors;
+
+import jdk.tools.jlink.internal.SymLinkResourcePoolEntry;
 public class Memorabilia{
     public static void main(String[] args){
         /**
@@ -20,6 +24,8 @@ public class Memorabilia{
          * Damos un mensaje de bienvenida e imprimimos el menu principal
          */
         mensajeDeBienvenida();
+        inicializarCliente();
+        inicializarPelicula();
         menuPrincipal();
     }
 
@@ -77,7 +83,7 @@ public class Memorabilia{
             opcion = scanner.nextInt();
             switch (opcion) {
                 case 1:
-                    System.out.println("Submenu 1");
+                    prestarPelicula();
                     break;
             
                 case 2:
@@ -183,9 +189,74 @@ public class Memorabilia{
     }
 
     /**
+     * Metodo inicializar cliente, el cual inicializa los clientes por defecto que tiene el sistema
+     */
+    public void inicializarCliente(){
+        clienteId[0] = 1;
+        nombreCliente[0] = "Diego Maldonado";
+        telefonoCliente[0] = 58414925;
+        tienePeliculaPrestada[0] = false;
+        contadorClientes++;
+
+        clienteId[1] = 2;
+        nombreCliente[1] = "Karin Monterroso";
+        telefonoCliente[1] = 42259075;
+        tienePeliculaPrestada[1] = false;
+        contadorClientes++;
+
+        clienteId[2] = 3;
+        nombreCliente[2] = "Edwin Maldonado";
+        telefonoCliente[2] = 41515768;
+        tienePeliculaPrestada[2] = false;
+        contadorClientes++;
+    }
+
+    /**
+     * Metodo inicializar pelicula, el cual inicializa las peliculas por defecto del sistema
+     */
+    public void inicializarPelicula(){
+        peliculaId[0] = 1;
+        nombrePelicula[0] = "Batman: El Caballero de la Noche";
+        anioPelicula[0] = 2008;
+        categoriaPelicula[0] = "Accion";
+        peliculaDisponible[0] = true;
+        contadorPeliculas++;
+
+        peliculaId[1] = 2;
+        nombrePelicula[1] = "Star Wars: La Venganza de los Sith";
+        anioPelicula[1] = 2005;
+        categoriaPelicula[1] = "Ciencia Ficcion";
+        peliculaDisponible[1] = true;
+        contadorPeliculas++;
+
+        peliculaId[2] = 3;
+        nombrePelicula[2] = "Hereditary";
+        anioPelicula[2] = 2005;
+        categoriaPelicula[2] = "Terror Psicologico";
+        peliculaDisponible[2] = true;
+        contadorPeliculas++;
+
+        peliculaId[3] = 4;
+        nombrePelicula[3] = "Como si Fuera la Primera Vez";
+        anioPelicula[3] = 2005;
+        categoriaPelicula[3] = "Romance";
+        peliculaDisponible[3] = true;
+        contadorPeliculas++;
+
+        peliculaId[4] = 5;
+        nombrePelicula[4] = "Tierra de Osos";
+        anioPelicula[4] = 2005;
+        categoriaPelicula[4] = "Infantil";
+        peliculaDisponible[4] = true;
+        contadorPeliculas++;
+    }
+
+    /**
      * Metodo para ingresar una nueva pelicula al sistema
      */
     public void IngresarPelicula(){
+        System.out.println("\n");
+        System.out.println("Para seguir un pauta, te recordamos que el siguiente id debe ser "+(contadorPeliculas+1));
         System.out.println("\n");
         System.out.println("Ingrese el id de la pelicula ");
         peliculaId[contadorPeliculas] = scanner.nextInt();
@@ -224,6 +295,8 @@ public class Memorabilia{
      */
     public void ingresarCliente(){
         System.out.println("\n");
+        System.out.println("Para seguir una correlacion, te recordamos que el siguiente id en el sistema debe ser "+(contadorClientes+1));
+        System.out.println("\n");
         System.out.println("Ingresa el id del cliente");
         clienteId[contadorClientes] = scanner.nextInt();
         scanner.nextLine();
@@ -250,5 +323,34 @@ public class Memorabilia{
         else if(peliculaDisponible[posicion]==false){
             System.out.println("El cliente "+nombreCliente[posicion]+" no tiene peliculas prestadas");
         } 
+    }
+
+    /**
+     * Metodo prestar pelicula, el cual lleva la logica para prestar una pelicula en el sistema
+     */
+    public void prestarPelicula(){
+        System.out.println("\n");
+        System.out.println("Bienvenido al apartado para prestar peliculas");
+        System.out.println("Aqui podras prestar peliculas");
+        if(contadorPeliculas==0){
+            System.out.println("\n");
+            System.out.println("Aun no hay peliculas dentro del sistema");
+        }
+        else if(contadorClientes==0){
+            System.out.println("\n");
+            System.out.println("Aun no hay clientes dentro del sistema");
+        }
+        else if(contadorPeliculas!=0 && contadorClientes!=0){
+            for(int i=0; i<contadorPeliculas; i++){
+                if(peliculaDisponible[i]==true){
+                    System.out.println("\n");
+                    System.out.println("Las peliculas disponibles en el sistema son:");
+                    visualizarPeliculaEnSistema(i);
+                }
+                else if(peliculaDisponible[i]==false){
+                    System.out.println("No hay peliculas disponibles en el sistema, vuelve pronto");
+                }
+            }
+        }
     }
 }
