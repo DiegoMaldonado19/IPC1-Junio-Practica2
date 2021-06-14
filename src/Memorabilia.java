@@ -33,15 +33,24 @@ public class Memorabilia{
     /**
      * Conjunto de arreglos, los cuales nos permitiran almacenar la informacion ingresadad por el usuario
      */
+    /**
+     * Arreglos para cliente
+     */
     int[] clienteId = new int[50];
     String[] nombreCliente = new String[50];
     int[] telefonoCliente = new int[50];
     boolean[] tienePeliculaPrestada = new boolean[50];
+    /**
+     * Arreglos para pelicula
+     */
     int[] peliculaId = new int[50];
     String[] nombrePelicula = new String[50];
     String[] categoriaPelicula = new String[50];
     int[] anioPelicula = new int[50];
     boolean[] peliculaDisponible = new boolean[50];
+    /**
+     * Arreglos para prestamos
+     */
     int[] peliculaPrestadaId = new int[50];
     int[] clienteQuePrestoPelicula = new int[50];
     int[] cantidadDiasPrestamo = new int[50];
@@ -49,7 +58,7 @@ public class Memorabilia{
     /**
      * Variables enteras para saber cuantos clientes y peliculas en el sistema
      */
-    int contadorPeliculas=0, contadorClientes=0, cantidadPeliculasPrestadas=0;
+    int contadorPeliculas=0, contadorClientes=0, cantidadPeliculasPrestadas=0, contador=0;
 
     /**
      * Metodo para imprimir mensaje de bienvenida en pantalla
@@ -83,7 +92,7 @@ public class Memorabilia{
                     break;
             
                 case 2:
-                    
+                    devolverPelicula();
                     break;
                 
                 case 3:
@@ -357,17 +366,22 @@ public class Memorabilia{
             System.out.println("Solo existen "+contadorPeliculas+" peliculas en el sistema");
         }
         else if(cantidadPeliculas<contadorPeliculas){
-            for(int i=cantidadPeliculasPrestadas; i<cantidadPeliculas; i++){
+            do{
                 int eleccionCliente = escogerCliente();
                 int eleccionPelicula = escogerPelicula();
                 peliculaDisponible[eleccionPelicula-1] = false;
-                tienePeliculaPrestada[eleccionPelicula-1] = true;
-                peliculaPrestadaId[i] = peliculaId[eleccionPelicula-1];
-                clienteQuePrestoPelicula[i] = clienteId[eleccionCliente-1];
-            }
-            cantidadPeliculasPrestadas += cantidadPeliculas;
+                tienePeliculaPrestada[eleccionCliente-1] = true;
+                peliculaPrestadaId[contador] = peliculaId[eleccionPelicula-1];
+                clienteQuePrestoPelicula[contador] = clienteId[eleccionCliente-1];
+                cantidadPeliculasPrestadas++;
+                contador++;
+            }while(cantidadPeliculasPrestadas<cantidadPeliculas);
         }
     }
 
+    public void devolverPelicula(){
+        System.out.println("\n");
+        
+    }
 
 }
