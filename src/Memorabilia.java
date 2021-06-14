@@ -7,17 +7,26 @@ import java.util.*;
 public class Memorabilia{
     public static void main(String[] args){
         /**
-         * Instanciamos objeto para evitar problemas con el ambito estatico
+         * Instanciamos objeto de la clase para evitar problemas con el ambito estatico y poder usar los metodos
          */
         Memorabilia memorabilia = new Memorabilia();
     }
+
+    /**
+     * Programa correspondiente a la practica 2, Introducción y Programacíón I, Escuela de Vacaciones 2021
+     * @author Diego Maldonado
+     * @author dj_maldonado19@hotmail.es
+     * @version 1.0
+     */
 
     /**
      * Constructor de la clase donde se hacen los llamados a los metodos correspondientes
      */
     public Memorabilia(){
         /**
-         * Damos un mensaje de bienvenida e imprimimos el menu principal
+         * Damos un mensaje de bienvenida
+         * Inicializamos y llenamos de datos los arreglos para clientes y peliculas
+         * Luego mostramos el menu principal
          */
         mensajeDeBienvenida();
         inicializarCliente();
@@ -31,17 +40,17 @@ public class Memorabilia{
     Scanner scanner = new Scanner(System.in);
 
     /**
-     * Conjunto de arreglos, los cuales nos permitiran almacenar la informacion ingresadad por el usuario
+     * Conjunto de arreglos, los cuales nos permitiran almacenar la informacion ingresada por el usuario
      */
     /**
-     * Arreglos para cliente
+     * Arreglos para cliente, los cuales guardan el id, nombre, telefono y si tiene una pelicula prestada
      */
     int[] clienteId = new int[50];
     String[] nombreCliente = new String[50];
     int[] telefonoCliente = new int[50];
     boolean[] tienePeliculaPrestada = new boolean[50];
     /**
-     * Arreglos para pelicula
+     * Arreglos para pelicula, los cuales contienen a su id, nombre, categoria, año y si esta disponible la pelicula
      */
     int[] peliculaId = new int[50];
     String[] nombrePelicula = new String[50];
@@ -49,14 +58,14 @@ public class Memorabilia{
     int[] anioPelicula = new int[50];
     boolean[] peliculaDisponible = new boolean[50];
     /**
-     * Arreglos para prestamos
+     * Arreglos para prestamos, los cuales contienen el id de la pelicula prestada, que cliente la presto y la cantidad de dia que se presto
      */
     int[] peliculaPrestadaId = new int[50];
     int[] clienteQuePrestoPelicula = new int[50];
     int[] cantidadDiasPrestamo = new int[50];
 
     /**
-     * Variables enteras para saber cuantos clientes y peliculas en el sistema
+     * Variables enteras, para saber la cantidad de peliculas, clientes y  peliculas prestadas, y un contador para el metodo prestar pelicula
      */
     int contadorPeliculas=0, contadorClientes=0, cantidadPeliculasPrestadas=0, contador=0;
 
@@ -64,6 +73,9 @@ public class Memorabilia{
      * Metodo para imprimir mensaje de bienvenida en pantalla
      */
     public void mensajeDeBienvenida(){
+        /**
+         * Imprimimos un mensaje de bienvenida e imprimimos un salto de linea
+         */
         System.out.println("Bienvenido a Memorabilia");
         System.out.println("En nuestro sistema puedes prestar peliculas y verlas desde la comodidad de tu casa");
         System.out.println("\n");
@@ -73,9 +85,18 @@ public class Memorabilia{
      * Metodo para navegar por el menu principal
      */
     public void menuPrincipal(){
+        /**
+         * Variables para saber si el usuario desea salir y para almacenar la opcion que elija
+         */
         boolean salir = false;
         int opcion=0;
+        /**
+         * Ciclo para repetir la impresion del menu hasta que el usuario deseee salir
+         */
         do{
+            /**
+             * Impresion de opciones para el usuario y posterior almacenamiento de la opcion
+             */
             System.out.println("\n");
             System.out.println("1) Prestar pelicula");
             System.out.println("2) Devolver pelicula");
@@ -86,6 +107,9 @@ public class Memorabilia{
             System.out.println("7) Menu de reportes");
             System.out.println("8) Salir");
             opcion = scanner.nextInt();
+            /**
+             * Ciclo switch para llamar a los metodos segun eleccion del usuario
+             */
             switch (opcion) {
                 case 1:
                     prestarPelicula();
@@ -148,10 +172,19 @@ public class Memorabilia{
      * Metodo para navegar por el menu de reportes
      */
     public void menuReporte(){
+        /**
+         * Variables para almacenar la opcion ingresadad por el usuario y una booleana por si desea salir
+         */
         int opcion = 0;
         boolean salir = false;
 
+        /**
+         * Ciclo para repetir el menu de reportes hasta que el usuario desee salir
+         */
         do{
+            /**
+             * Impresion de opciones para el usuario y posterior almacenamiento
+             */
             System.out.println("\n");
             System.out.println("1) Revisar cantidad de peliculas por categoria");
             System.out.println("2) Peliculas por categoria especifica");
@@ -160,6 +193,9 @@ public class Memorabilia{
             System.out.println("5) Pelicula menos prestada");
             System.out.println("6) Salir");
             opcion = scanner.nextInt();
+            /**
+             * Ciclo para desarrollar logica segun la eleccion del usuario
+             */
             switch (opcion) {
                 case 1:
                     System.out.println("\n");
@@ -200,6 +236,7 @@ public class Memorabilia{
 
     /**
      * Metodo inicializar cliente, el cual inicializa los clientes por defecto que tiene el sistema
+     * Se generan datos en las primeras 3 posiciones para los arreglos de cliente
      */
     public void inicializarCliente(){
         clienteId[0] = 1;
@@ -223,6 +260,7 @@ public class Memorabilia{
 
     /**
      * Metodo inicializar pelicula, el cual inicializa las peliculas por defecto del sistema
+     * Se generan datos para las primeras 5 posiciones de los arreglos de peliculas
      */
     public void inicializarPelicula(){
         peliculaId[0] = 1;
@@ -265,6 +303,10 @@ public class Memorabilia{
      * Metodo para ingresar una nueva pelicula al sistema
      */
     public void IngresarPelicula(){
+        /**
+         * Se le solicita al usuario el ingreso de los datos para llenar los arreglos de cliente
+         * Se le sugiere que siga una pauta para no perder una relacion en los id
+         */
         System.out.println("\n");
         System.out.println("Para seguir un pauta, te recordamos que el siguiente id debe ser "+(contadorPeliculas+1));
         System.out.println("\n");
@@ -279,19 +321,28 @@ public class Memorabilia{
         System.out.println("Ingrese la categoria de la pelicula");
         categoriaPelicula[contadorPeliculas] = scanner.nextLine();
         peliculaDisponible[contadorPeliculas] = true; 
+        /**
+         * Sumamos 1 al contador de peliculas
+         */
         contadorPeliculas++;
     }
 
     /**
      * Metodo para visualizar peliculas en el sistema, el cual es iterable
-     * @param posicion
+     * @param posicion variable recibir la posicion de iteracion 
      */
     public void visualizarPeliculaEnSistema(int posicion){
+        /**
+         * Escribimos los datos de los arreglos en el indice "posicion"
+         */
         System.out.println("\n");
         System.out.println("El id de la pelicula es: "+peliculaId[posicion]);
         System.out.println("El nombre de la pelicula es: "+nombrePelicula[posicion]);
         System.out.println("El anio de la pelicula es: "+anioPelicula[posicion]);
         System.out.println("La categoria de la pelicula es: "+categoriaPelicula[posicion]);
+        /**
+         * Bifurcacion para saber si la pelicula esta disponible
+         */
         if(peliculaDisponible[posicion]==true){
             System.out.println("La pelicula "+nombrePelicula[posicion]+" esta disponible");
         }
@@ -304,6 +355,9 @@ public class Memorabilia{
      * Metodo para ingresar los datos de un nuevo cliente al sistema
      */
     public void ingresarCliente(){
+        /**
+         * Peticion de datos al usuario y posterior almacenamiento
+         */
         System.out.println("\n");
         System.out.println("Para seguir una correlacion, te recordamos que el siguiente id en el sistema debe ser "+(contadorClientes+1));
         System.out.println("\n");
@@ -320,13 +374,19 @@ public class Memorabilia{
 
     /**
      * Metodo para mostrar clientes en el sistema, el cual es iterable
-     * @param posicion
+     * @param posicion variable posicion la cual es iterable
      */
     public void mostrarClienteEnSistema(int posicion){
+        /**
+         * Impresion de datos en los arreglos en el indice "posicion"
+         */
         System.out.println("\n");
         System.out.println("El id del cliente es: "+clienteId[posicion]);
         System.out.println("El nombre del cliente es: "+nombreCliente[posicion]);
         System.out.println("El telefono del cliente es: "+telefonoCliente[posicion]);
+        /**
+         * Bifurcacion para saber si el cliente presto peliculas
+         */
         if(tienePeliculaPrestada[posicion]==true){
             System.out.println("El cliente "+nombreCliente[posicion]+" presto al menos una pelicula");
         }
@@ -337,9 +397,12 @@ public class Memorabilia{
 
     /**
      * Metodo que retorna la eleccion de cliente para prestar una pelicula
-     * @return
+     * @return retorna la variable entera eleccion de cliente 
      */
     public int escogerCliente(){
+        /**
+         * Imprimimos los clientes en el sistema y solicitamos que elija un cliente
+         */
         int eleccionCliente =0;
         System.out.println("\n");
         System.out.println("Los clientes en el sistema son: ");
@@ -354,9 +417,12 @@ public class Memorabilia{
 
     /**
      * Metodo que retorna la eleccion de pelicula para poder prestarla
-     * @return
+     * @return la variable entera eleccion de pelicula 
      */
     public int escogerPelicula(){
+        /**
+         * Mostramos las peliculas disponibles para poder elegir una
+         */
         int eleccionPelicula = 0;
         System.out.println("\n");
         System.out.println("Las peliculas disponibles en el sistema son:");
@@ -375,6 +441,9 @@ public class Memorabilia{
      * Metodo para prestar pelicula, el cual es para prestar mas de una pelicula por usuario
      */
     public void prestarPelicula(){
+        /**
+         * Pedimos cuantas peliculas desea prestar al usuario y mostramos la peliculas disponibles
+         */
         int cantidadPeliculas=0;
         System.out.println("¿Cuantas peliculas deseas prestar?");
         cantidadPeliculas = scanner.nextInt();
@@ -399,6 +468,9 @@ public class Memorabilia{
      * Metodo devolver pelicula, el cual hace los llamados y devuelve las peliculas en cuestion
      */
     public void devolverPelicula(){
+        /**
+         * Guardamos los valores retornados de los metodos y seteamos la informacion obtenida
+         */
         int opcionCliente=0;
         int opcionPelicula=0;
         System.out.println("\n");
@@ -410,9 +482,12 @@ public class Memorabilia{
 
     /**
      * Metodo para visualizar que clientes han prestado peliculas y elegir uno para devolver 
-     * @return
+     * @return variable entera eleccion que retorna el id del cliente elegido
      */
     public int verUsuariosConPeliculasPrestadas(){
+        /**
+         * Imprimimos los clientes con peliculas prestadas y retornamos al cliente elegido
+         */
         int eleccion;
         for(int i=0; i<contadorClientes; i++){
             if(tienePeliculaPrestada[i]==true){
@@ -427,10 +502,13 @@ public class Memorabilia{
 
     /**
      * Metodo para visualizar las peliculas prestadas por el usuario, el cual retorna la eleccion de pelicula
-     * @param clienteId
-     * @return
+     * @param clienteId para saber que cliente ha sido elegido por el usuario y que peliculas tiene prestadas
+     * @return retornamos la variable entera eleccion, que es la eleccion de la pelicula
      */
     public int verPeliculasPrestadasPorUsuario(int clienteId){
+        /**
+         * Imprimimos las peliculas prestads por x cliente y almacenamos la pelicula elegida para devolver
+         */
         int eleccion=0;
         System.out.println("\n");
         System.out.println("El cliente prestó las siguientes peliculas:");
@@ -448,7 +526,13 @@ public class Memorabilia{
      * Metodo para saber cuantas peliculas hay por categoria
      */
     public void peliculasPorCategoria(){
+        /**
+         * Contadores para saber cuantas peliculas hay por categoria
+         */
         int contadorCiencia=0, contadorAccion=0, contadorInfantil=0, contadorRomance=0, contadorTerror=0;
+        /**
+         * Ciclo para analizar cuantas peliculas hay en el arreglo de peliculas por categoria
+         */
         for(int i=0; i<contadorPeliculas; i++){
             if(categoriaPelicula[i].equals("Ciencia Ficcion")){
                 contadorCiencia++;
@@ -477,6 +561,9 @@ public class Memorabilia{
      * Metodo para saber cual es la pelicula más prestadad en el sistema
      */
     public void peliculaMasPrestada(){
+        /**
+         * Metodo con ciclo for para almacenar el nombre de la pelicula, donde se repita mas su id en el arreglo de peliculas prestadas id
+         */
         String peliculaMasPrestada="";
         for(int i=0; i<cantidadPeliculasPrestadas; i++){
             for(int j=0; j<contadorPeliculas; j++){
@@ -492,6 +579,9 @@ public class Memorabilia{
      * Metodo para saber cual es la pelicula menos prestada en el sistema
      */
     public void peliculaMenosPrestada(){
+        /**
+         * Analizamos el arreglo peliculas prestadas con un for y el id de la pelicula que menos se repita es el que almacenaremos
+         */
         String peliculaMenosPrestada="";
         for(int i=0; i<contadorPeliculas; i++){
             if(peliculaPrestadaId[i]!=peliculaId[i]){
