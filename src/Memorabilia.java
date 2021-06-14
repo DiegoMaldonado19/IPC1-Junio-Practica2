@@ -49,7 +49,7 @@ public class Memorabilia{
     /**
      * Variables enteras para saber cuantos clientes y peliculas en el sistema
      */
-    int contadorPeliculas=0, contadorClientes=0;
+    int contadorPeliculas=0, contadorClientes=0, cantidadPeliculasPrestadas=0;
 
     /**
      * Metodo para imprimir mensaje de bienvenida en pantalla
@@ -83,7 +83,7 @@ public class Memorabilia{
                     break;
             
                 case 2:
-                    System.out.println("Submenu 2");
+                    
                     break;
                 
                 case 3:
@@ -321,49 +321,53 @@ public class Memorabilia{
         } 
     }
 
-    /**
-     * Metodo prestar pelicula, el cual lleva la logica para prestar una pelicula en el sistema
-     */
-    public void prestarPelicula(){
-        int eleccionPelicula=0;
-        int eleccionCliente=0;
+    public int escogerCliente(){
+        int eleccionCliente =0;
         System.out.println("\n");
-        System.out.println("Bienvenido al apartado para prestar peliculas");
-        System.out.println("Aqui podras prestar peliculas");
-        if(contadorPeliculas==0){
-            System.out.println("\n");
-            System.out.println("Aun no hay peliculas dentro del sistema");
+        System.out.println("Los clientes en el sistema son: ");
+        for(int i=0; i<contadorClientes; i++){
+            System.out.println((i+1)+") "+nombreCliente[i]);
         }
-        if(contadorClientes==0){
-            System.out.println("\n");
-            System.out.println("Aun no hay clientes dentro del sistema");
-        }
-        if(contadorPeliculas!=0){
-            System.out.println("\n");
-            System.out.println("Las peliculas disponibles en el sistema son:");
-            for(int i=0; i<contadorPeliculas; i++){
-                if(peliculaDisponible[i]==true){
-                    System.out.println((i+1)+") "+nombrePelicula[i]+", año: "+anioPelicula[i]+", categoria: "+categoriaPelicula[i]);
-                }
-            }
-            System.out.println("\n");
-            System.out.println("¿Que pelicula deseas prestar?");
-            eleccionPelicula = scanner.nextInt();
+        System.out.println("\n");
+        System.out.println("¿Qué cliente prestará una pelicula?");
+        eleccionCliente = scanner.nextInt();
+        return eleccionCliente;
+    }
 
-            peliculaDisponible[eleccionPelicula-1] = false;
-            peliculaPrestadaId[eleccionPelicula-1] = eleccionPelicula;
-        }
-        if(contadorClientes!=0){
-            System.out.println("\n");
-            System.out.println("Los clientes en el sistema son: ");
-            for(int i=0; i<contadorClientes; i++){
-                System.out.println((i+1)+") "+nombreCliente[i]);
+    public int escogerPelicula(){
+        int eleccionPelicula = 0;
+        System.out.println("\n");
+        System.out.println("Las peliculas disponibles en el sistema son:");
+        for(int i=0; i<contadorPeliculas; i++){
+            if(peliculaDisponible[i]==true){
+               System.out.println((i+1)+") "+nombrePelicula[i]+", año: "+anioPelicula[i]+", categoria: "+categoriaPelicula[i]);
             }
-            System.out.println("¿Qué cliente tendrá esta pelicula?");
-            eleccionCliente = scanner.nextInt();
+        }
+        System.out.println("\n");
+        System.out.println("¿Que pelicula desea prestar?");
+        eleccionPelicula = scanner.nextInt();
+        return eleccionPelicula;
+    }
 
-            clienteQuePrestoPelicula[eleccionCliente-1] = eleccionCliente;
-            tienePeliculaPrestada[eleccionCliente-1] = true;
+    public void prestarPelicula(){
+        int cantidadPeliculas=0;
+        System.out.println("¿Cuantas peliculas deseas prestar?");
+        cantidadPeliculas = scanner.nextInt();
+        if(cantidadPeliculas>contadorPeliculas){
+            System.out.println("Solo existen "+contadorPeliculas+" peliculas en el sistema");
+        }
+        else if(cantidadPeliculas<contadorPeliculas){
+            for(int i=cantidadPeliculasPrestadas; i<cantidadPeliculas; i++){
+                int eleccionCliente = escogerCliente();
+                int eleccionPelicula = escogerPelicula();
+                peliculaDisponible[eleccionPelicula-1] = false;
+                tienePeliculaPrestada[eleccionPelicula-1] = true;
+                peliculaPrestadaId[i] = peliculaId[eleccionPelicula-1];
+                clienteQuePrestoPelicula[i] = clienteId[eleccionCliente-1];
+            }
+            cantidadPeliculasPrestadas += cantidadPeliculas;
         }
     }
+
+
 }
