@@ -162,23 +162,28 @@ public class Memorabilia{
             opcion = scanner.nextInt();
             switch (opcion) {
                 case 1:
-                    System.out.println("Revisar cantidad de peliculas por categoria");
+                    System.out.println("\n");
+                    System.out.println("La cantidad de peliculas por categoria es de: "+contadorPeliculas);
                     break;
                 
                 case 2:
-                    System.out.println("Peliculas por categoria especifica");
+                    System.out.println("\n");
+                    peliculasPorCategoria();
                     break;
                     
                 case 3:
-                    System.out.println("Cantidad de veces que se presto una pelicula");
+                    System.out.println("\n");
+                    System.out.println("La cantidad de veces que se prestó una pelicula fue de: "+cantidadPeliculasPrestadas);
                     break;
                 
                 case 4:
-                    System.out.println("Pelicula mas prestada");
+                    System.out.println("\n");
+                    peliculaMasPrestada();
                     break;  
                 
                 case 5:
-                    System.out.println("Pelicula menos prestada");
+                    System.out.println("\n");
+                    peliculaMenosPrestada();
                     break;
 
                 case 6:
@@ -439,4 +444,60 @@ public class Memorabilia{
         return eleccion;
     }
 
+    /**
+     * Metodo para saber cuantas peliculas hay por categoria
+     */
+    public void peliculasPorCategoria(){
+        int contadorCiencia=0, contadorAccion=0, contadorInfantil=0, contadorRomance=0, contadorTerror=0;
+        for(int i=0; i<contadorPeliculas; i++){
+            if(categoriaPelicula[i].equals("Ciencia Ficcion")){
+                contadorCiencia++;
+                System.out.println("La cantidad de peliculas de Ciencia Ficcion es: "+contadorCiencia);
+            }
+            else if(categoriaPelicula[i].equals("Romance")){
+                contadorRomance++;
+                System.out.println("La cantidad de peliculas de Romance es: "+contadorRomance);
+            }
+            else if(categoriaPelicula[i].equals("Accion")){
+                contadorAccion++;
+                System.out.println("La cantidad de peliculas de Accion es: "+contadorAccion);
+            }
+            else if(categoriaPelicula[i].equals("Terror Psicologico")){
+                contadorTerror++;
+                System.out.println("La cantidad de peliculas de Terror Psicologico es: "+contadorTerror);
+            }
+            else if(categoriaPelicula[i].equals("Infantil")){
+                contadorInfantil++;
+                System.out.println("La cantidad de peliculas Infantiles es: "+contadorInfantil);
+            } 
+        }
+    }
+
+    /**
+     * Metodo para saber cual es la pelicula más prestadad en el sistema
+     */
+    public void peliculaMasPrestada(){
+        String peliculaMasPrestada="";
+        for(int i=0; i<cantidadPeliculasPrestadas; i++){
+            for(int j=0; j<contadorPeliculas; j++){
+                if(peliculaPrestadaId[i]==peliculaId[j]){
+                    peliculaMasPrestada =  nombrePelicula[peliculaId[j]];
+                }
+            }
+        }
+        System.out.println("La pelicula más prestada es: "+peliculaMasPrestada);
+    }
+
+    /**
+     * Metodo para saber cual es la pelicula menos prestada en el sistema
+     */
+    public void peliculaMenosPrestada(){
+        String peliculaMenosPrestada="";
+        for(int i=0; i<contadorPeliculas; i++){
+            if(peliculaPrestadaId[i]!=peliculaId[i]){
+                peliculaMenosPrestada = nombrePelicula[peliculaId[i]-1];
+            }
+        }
+        System.out.println("La pelicula menos prestada es: "+peliculaMenosPrestada);
+    }
 }
