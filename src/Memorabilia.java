@@ -330,6 +330,10 @@ public class Memorabilia{
         } 
     }
 
+    /**
+     * Metodo que retorna la eleccion de cliente para prestar una pelicula
+     * @return
+     */
     public int escogerCliente(){
         int eleccionCliente =0;
         System.out.println("\n");
@@ -343,6 +347,10 @@ public class Memorabilia{
         return eleccionCliente;
     }
 
+    /**
+     * Metodo que retorna la eleccion de pelicula para poder prestarla
+     * @return
+     */
     public int escogerPelicula(){
         int eleccionPelicula = 0;
         System.out.println("\n");
@@ -358,6 +366,9 @@ public class Memorabilia{
         return eleccionPelicula;
     }
 
+    /**
+     * Metodo para prestar pelicula, el cual es para prestar mas de una pelicula por usuario
+     */
     public void prestarPelicula(){
         int cantidadPeliculas=0;
         System.out.println("¿Cuantas peliculas deseas prestar?");
@@ -379,35 +390,53 @@ public class Memorabilia{
         }
     }
 
+    /**
+     * Metodo devolver pelicula, el cual hace los llamados y devuelve las peliculas en cuestion
+     */
     public void devolverPelicula(){
         int opcionCliente=0;
         int opcionPelicula=0;
-        int contador1=0;
         System.out.println("\n");
+        opcionCliente = verUsuariosConPeliculasPrestadas();
+        opcionPelicula = verPeliculasPrestadasPorUsuario(opcionCliente);
+        tienePeliculaPrestada[opcionCliente-1] = false;
+        peliculaDisponible[opcionPelicula-1] = true;
+    }
+
+    /**
+     * Metodo para visualizar que clientes han prestado peliculas y elegir uno para devolver 
+     * @return
+     */
+    public int verUsuariosConPeliculasPrestadas(){
+        int eleccion;
         for(int i=0; i<contadorClientes; i++){
             if(tienePeliculaPrestada[i]==true){
-                System.out.println((i+1)+") El cliente "+nombreCliente[i]+" tiene peliculas prestadas");
+                System.out.println((clienteId[i])+") El cliente "+nombreCliente[i]+" tiene peliculas prestadas");
             }
         }
         System.out.println("Eliga el usuario que devolvera una pelicula");
-        opcionCliente = scanner.nextInt();
-        do{
-            if(clienteQuePrestoPelicula[contador1]==opcionCliente){
-                System.out.println((contador1+1)+") La pelicula "+nombrePelicula[opcionCliente-1]+" fue prestada");
-                contador1++;
-            }
-            else{
-                contador1++;
-            }
-        }while(contador1<contadorPeliculas);
-            
-        System.out.println("Elige la pelicula a devolver");
-        opcionPelicula = scanner.nextInt();
+        eleccion = scanner.nextInt();
 
-        peliculaDisponible[opcionPelicula] = true;
-        tienePeliculaPrestada[opcionPelicula] = false;
+        return eleccion;
+    }
 
-        
+    /**
+     * Metodo para visualizar las peliculas prestadas por el usuario, el cual retorna la eleccion de pelicula
+     * @param clienteId
+     * @return
+     */
+    public int verPeliculasPrestadasPorUsuario(int clienteId){
+        int eleccion=0;
+        System.out.println("\n");
+        System.out.println("El cliente prestó las siguientes peliculas:");
+        for(int i=0; i<contadorPeliculas; i++){
+            if(clienteQuePrestoPelicula[i]==clienteId ){
+                System.out.println(peliculaId[peliculaPrestadaId[i]-1]+") "+nombrePelicula[peliculaPrestadaId[i]-1]);
+            }
+        }
+        System.out.println("Elige que pelicula devolvera");
+        eleccion = scanner.nextInt();
+        return eleccion;
     }
 
 }
