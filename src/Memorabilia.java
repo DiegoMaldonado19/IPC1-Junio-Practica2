@@ -380,7 +380,33 @@ public class Memorabilia{
     }
 
     public void devolverPelicula(){
+        int opcionCliente=0;
+        int opcionPelicula=0;
+        int contador1=0;
         System.out.println("\n");
+        for(int i=0; i<contadorClientes; i++){
+            if(tienePeliculaPrestada[i]==true){
+                System.out.println((i+1)+") El cliente "+nombreCliente[i]+" tiene peliculas prestadas");
+            }
+        }
+        System.out.println("Eliga el usuario que devolvera una pelicula");
+        opcionCliente = scanner.nextInt();
+        do{
+            if(clienteQuePrestoPelicula[contador1]==opcionCliente){
+                System.out.println((contador1+1)+") La pelicula "+nombrePelicula[opcionCliente-1]+" fue prestada");
+                contador1++;
+            }
+            else{
+                contador1++;
+            }
+        }while(contador1<contadorPeliculas);
+            
+        System.out.println("Elige la pelicula a devolver");
+        opcionPelicula = scanner.nextInt();
+
+        peliculaDisponible[opcionPelicula] = true;
+        tienePeliculaPrestada[opcionPelicula] = false;
+
         
     }
 
